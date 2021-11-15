@@ -17,5 +17,8 @@ app.listen(PORT, () => {
 
 const userRouter = require('./routes/userRoutes')
 const genRouter = require('./routes/genRoutes')
+const magicItemsRouter = require('./routes/magicItemsRoutes')
+
 app.use('/gen', genRouter)
 app.use('/user', userRouter)
+app.use('/magicItem', magicItemsRouter)
