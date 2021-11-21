@@ -2,7 +2,7 @@ const model = require('../models')
 const jwt = require('jsonwebtoken')
 const magicItemsController = {}
 
-///// Creates user in database /////
+
 magicItemsController.getAll = async (req,res) => {
     const items = await model.magicitems.findAll()
     res.json({
@@ -13,13 +13,17 @@ magicItemsController.getAll = async (req,res) => {
 
 magicItemsController.create = async (req,res) => {
     console.log(req.body)
+    const encryptedId = req.body.userid
+    const decryptedId = await jwt.verify(encryptedId, process.env.JWT_SECRET)
+
+    console.log(decryptedId.userId)
     try {
         let item = await model.magicitems.create({
             name: req.body.name,
             type: req.body.type,
             attunement: req.body.attunement,
             description: req.body.description,
-            userid: req.body.userid
+            userid: decryptedId.userId
         })
 
         res.json({
