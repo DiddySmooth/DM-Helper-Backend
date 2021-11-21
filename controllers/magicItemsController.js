@@ -16,24 +16,91 @@ magicItemsController.create = async (req,res) => {
     const encryptedId = req.body.userid
     const decryptedId = await jwt.verify(encryptedId, process.env.JWT_SECRET)
 
+
+
     console.log(decryptedId.userId)
     try {
+
         let item = await model.magicitems.create({
             name: req.body.name,
             type: req.body.type,
             attunement: req.body.attunement,
             description: req.body.description,
-            userid: decryptedId.userId
+            userid: decryptedId.userId,
+            likes: 0
         })
-
-        res.json({
-            item
-        })
+        res.json({item})
     } catch (error) {
         console.log(error)
-        res.json({
-            error
-        })
+        res.json({error})
     }
+}
+
+///// Edit token x and y after moved on frontend /////
+magicItemsController.update = async (req,res) => {
+    const encryptedId = req.body.userid
+    const decryptedId = await jwt.verify(encryptedId, process.env.JWT_SECRET)
+    try {
+        const item = await model.magicitems.findOne({
+            where: {
+                name: req.body.name,
+                type: req.body.type,
+                attunement: req.body.attunement,
+                description: req.body.description,
+                userid: decryptedId.userId
+            }
+        })
+        let res = await item.update({
+            name: req.body.name,
+            type: req.body.type,
+            attunement: req.body.attunement,
+            description: req.body.description,
+        })
+        res.json({res})
+    } catch (error) {
+        console.log(error)
+        res.json({error})
+    }
+}
+
+magicItemsController.like = async (req, res) => {
+    // const encryptedId = req.body.userid
+    // const decryptedId = await jwt.verify(encryptedId, process.env.JWT_SECRET)
+    
+    const likeExists = await model.userlikes.findOne({
+        where: {
+            userid: req.body.userId,
+            itemid: req.body.itemId,
+            type: req.body.type
+        }
+    })
+    if(!likeExists){
+        const like = await model.userlikes.create({
+            userid: req.body.userId,
+            itemid: req.body.itemId,
+            type: req.body.type
+        })
+        console.log("no like exist")
+
+        try {
+            const item = await model.magicitems.findOne({
+                where: {
+                    id: req.body.itemId
+                }
+            })
+            let update = await item.update({
+                likes: item.likes + 1
+            })
+            res.json({update})
+        }catch(error){
+            console.log(error)
+            res.json({error})
+        }
+    }else{
+        res.json("User already liked")
+    }
+
+
+    
 }
 module.exports = magicItemsController
