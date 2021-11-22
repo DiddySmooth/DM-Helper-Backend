@@ -12,13 +12,9 @@ magicItemsController.getAll = async (req,res) => {
 }
 
 magicItemsController.create = async (req,res) => {
-    console.log(req.body)
     const encryptedId = req.body.userid
     const decryptedId = await jwt.verify(encryptedId, process.env.JWT_SECRET)
 
-
-
-    console.log(decryptedId.userId)
     try {
 
         let item = await model.magicitems.create({
@@ -64,19 +60,19 @@ magicItemsController.update = async (req,res) => {
 }
 
 magicItemsController.like = async (req, res) => {
-    // const encryptedId = req.body.userid
-    // const decryptedId = await jwt.verify(encryptedId, process.env.JWT_SECRET)
+    const encryptedId = req.body.userid
+    const decryptedId = await jwt.verify(encryptedId, process.env.JWT_SECRET)
     
     const likeExists = await model.userlikes.findOne({
         where: {
-            userid: req.body.userId,
+            userid: decryptedId,
             itemid: req.body.itemId,
             type: req.body.type
         }
     })
     if(!likeExists){
         const like = await model.userlikes.create({
-            userid: req.body.userId,
+            userid: decryptedId,
             itemid: req.body.itemId,
             type: req.body.type
         })
