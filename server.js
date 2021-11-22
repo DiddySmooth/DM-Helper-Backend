@@ -1,12 +1,12 @@
 const express = require('express')
 const app = express()
-
+const cors = require('cors')
 app.use(require('morgan')('tiny'))
 const routesReport = require('rowdy-logger').begin(app)
 
 require('dotenv').config()
 app.use(express.json())
-app.use(require('cors')())
+app.use(cors())
 
 
 const PORT = process.env.PORT || 3001
@@ -18,14 +18,6 @@ app.listen(PORT, () => {
 const userRouter = require('./routes/userRoutes')
 const genRouter = require('./routes/genRoutes')
 const magicItemsRouter = require('./routes/magicItemsRoutes')
-
-app.all('/', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-});
-
 
 app.use('/gen', genRouter)
 app.use('/user', userRouter)
