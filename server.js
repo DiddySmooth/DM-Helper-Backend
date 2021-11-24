@@ -25,7 +25,9 @@ app.use(function(req, res, next) {
 const userRouter = require('./routes/userRoutes')
 const genRouter = require('./routes/genRoutes')
 const magicItemsRouter = require('./routes/magicItemsRoutes')
+const spellsRouter = require('./routes/spellsRoutes')
 
 app.use('/gen', genRouter)
 app.use('/user', userRouter)
 app.use('/magicItem', magicItemsRouter)
+app.use('/spells', spellsRouter)

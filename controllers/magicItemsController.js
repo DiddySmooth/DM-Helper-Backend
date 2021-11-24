@@ -4,11 +4,10 @@ const magicItemsController = {}
 
 
 magicItemsController.getAll = async (req,res) => {
-    const items = await model.magicitems.findAll()
+    const items = await model.usermagicitems.findAll()
     res.json({
         items
     })
-
 }
 
 magicItemsController.create = async (req,res) => {
@@ -16,14 +15,14 @@ magicItemsController.create = async (req,res) => {
     const decryptedId = await jwt.verify(encryptedId, process.env.JWT_SECRET)
 
     try {
-
-        let item = await model.magicitems.create({
+        let item = await model.usermagicitems.create({
             name: req.body.name,
             type: req.body.type,
             attunement: req.body.attunement,
             description: req.body.description,
             userid: decryptedId.userId,
-            likes: 0
+            likes: 0,
+            rarity: req.body.rarity
         })
         res.json({item})
     } catch (error) {
@@ -37,7 +36,7 @@ magicItemsController.update = async (req,res) => {
     const encryptedId = req.body.userid
     const decryptedId = await jwt.verify(encryptedId, process.env.JWT_SECRET)
     try {
-        const item = await model.magicitems.findOne({
+        const item = await model.usermagicitems.findOne({
             where: {
                 name: req.body.name,
                 type: req.body.type,
@@ -51,6 +50,7 @@ magicItemsController.update = async (req,res) => {
             type: req.body.type,
             attunement: req.body.attunement,
             description: req.body.description,
+            rarity: req.body.rarity
         })
         res.json({res})
     } catch (error) {
@@ -95,8 +95,5 @@ magicItemsController.like = async (req, res) => {
     }else{
         res.json("User already liked")
     }
-
-
-    
 }
 module.exports = magicItemsController

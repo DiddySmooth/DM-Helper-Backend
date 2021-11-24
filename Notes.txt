@@ -1,5 +1,5 @@
 COMMANDS RUN
 sequelize model:generate --name User --attributes username:text,password:text
-sequelize model:generate --name magicitems --attributes name:text,type:text,attunement:boolean,description:text,userid:integer,likes:integer
+sequelize model:generate --name usermagicitems --attributes name:text,type:text,attunement:boolean,description:text,userid:integer,likes:integer,rarity:text
 sequelize model:generate --name userlikes --attributes userid:integer, itemid:integer, type:text
-
+sequelize model:generate --name userspells --attributes name:text,level:integer,school:text,castingtime:text,range:text,area:text,components:text,duration:text,attack:text,damage:text,save:text,effect:text,description:text,userid:integer,likes:integer
