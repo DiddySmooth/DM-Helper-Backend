@@ -15,7 +15,7 @@ app.listen(PORT, () => {
 })
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://dmhammer.herokuapp.com'],
+  origin: 'http://localhost:3000',
   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }));
 
