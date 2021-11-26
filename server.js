@@ -6,8 +6,6 @@ const routesReport = require('rowdy-logger').begin(app)
 
 require('dotenv').config()
 app.use(express.json())
-app.use(cors())
-
 
 const PORT = process.env.PORT || 3001
 
