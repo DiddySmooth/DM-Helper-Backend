@@ -65,14 +65,14 @@ magicItemsController.like = async (req, res) => {
     
     const likeExists = await model.userlikes.findOne({
         where: {
-            userid: decryptedId,
+            userid: decryptedId.userId,
             itemid: req.body.itemId,
             type: req.body.type
         }
     })
     if(!likeExists){
         const like = await model.userlikes.create({
-            userid: decryptedId,
+            userid: decryptedId.userId,
             itemid: req.body.itemId,
             type: req.body.type
         })
