@@ -13,7 +13,7 @@ app.listen(PORT, () => {
   console.log(`server listening on ${PORT}`);
   routesReport.print()
 })
-
+app.options('*', cors()) 
 app.use(cors({
   origin: 'http://localhost:3000',
   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH','OPTIONS']
