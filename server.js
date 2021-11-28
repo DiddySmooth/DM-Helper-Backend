@@ -4,9 +4,8 @@ const cors = require('cors')
 app.use(require('morgan')('tiny'))
 const routesReport = require('rowdy-logger').begin(app)
 
-app.options('*', cors()) 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: '*',
   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH','OPTIONS']
 }));
 
