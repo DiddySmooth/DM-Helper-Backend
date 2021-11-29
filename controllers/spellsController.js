@@ -49,14 +49,14 @@ spellsController.like = async (req, res) => {
     const likeExist = await model.userlikes.findOne({
         where: {
             userid: decryptedId.userId,
-            itemid: req.body.spellid,
+            itemid: req.body.itemid,
             type: req.body.type
         }
     })
     if(!likeExist){
         const like = await model.userlikes.create({
             userid: decryptedId.userId,
-            itemid: req.body.spellid,
+            itemid: req.body.itemid,
             type: req.body.type
         })
         console.log("no like exist")
@@ -64,7 +64,7 @@ spellsController.like = async (req, res) => {
         try{
             const item = await model.userspells.findOne({
                 where: {
-                    id: req.body.spellid
+                    id: req.body.itemid
                 }
             })
             console.log(item)
