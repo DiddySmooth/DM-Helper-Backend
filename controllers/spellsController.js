@@ -46,7 +46,7 @@ spellsController.like = async (req, res) => {
     console.log(decryptedId)
     const likeExist = await model.userlikes.findOne({
         where: {
-            userid: decryptedId.userId,
+            userid: decryptedId.userid,
             itemid: req.body.spellid,
             type: req.body.type
         }
@@ -54,7 +54,7 @@ spellsController.like = async (req, res) => {
     if(!likeExist){
         const like = await model.userlikes.create({
             userid: decryptedId.userId,
-            itemid: req.body.spellId,
+            itemid: req.body.spellid,
             type: req.body.type
         })
         console.log("no like exist")
@@ -66,9 +66,10 @@ spellsController.like = async (req, res) => {
                 }
             })
             console.log(item)
-            // let update = await item.update({
-            //     likes: item.likes + 1
-            // })
+            let update = await item.update({
+                likes: item.likes + 1
+            })
+            res.json({update})
         }catch(error){
             console.log(error)
             res.json({error})
