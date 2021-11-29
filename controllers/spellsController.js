@@ -30,7 +30,8 @@ spellsController.create = async(req, res)=> {
             save: req.body.save,
             effect: req.body.effect,
             description: req.body.description,
-            userid: decryptedId.userId
+            userid: decryptedId.userId,
+            likes: 1
         })
         res.json({spell})
     }catch (error){
