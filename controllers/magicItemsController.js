@@ -63,25 +63,27 @@ magicItemsController.like = async (req, res) => {
     const encryptedId = req.body.userid
     const decryptedId = await jwt.verify(encryptedId, process.env.JWT_SECRET)
     
+    console.log(req.body.itemid)
+
     const likeExists = await model.userlikes.findOne({
         where: {
             userid: decryptedId.userId,
-            itemid: req.body.itemId,
+            itemid: req.body.itemid,
             type: req.body.type
         }
     })
     if(!likeExists){
         const like = await model.userlikes.create({
             userid: decryptedId.userId,
-            itemid: req.body.itemId,
+            itemid: req.body.itemid,
             type: req.body.type
         })
         console.log("no like exist")
 
         try {
-            const item = await model.magicitems.findOne({
+            const item = await model.usermagicitems.findOne({
                 where: {
-                    id: req.body.itemId
+                    id: req.body.itemid
                 }
             })
             let update = await item.update({
