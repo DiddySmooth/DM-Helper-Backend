@@ -47,7 +47,7 @@ spellsController.like = async (req, res) => {
     console.log(decryptedId)
     const likeExist = await model.userlikes.findOne({
         where: {
-            userid: decryptedId.userid,
+            userid: decryptedId.userId,
             itemid: req.body.spellid,
             type: req.body.type
         }
