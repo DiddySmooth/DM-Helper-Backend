@@ -44,7 +44,7 @@ spellsController.like = async (req, res) => {
     const encryptedId = req.body.userid
     const decryptedId = await jwt.verify(encryptedId, process.env.JWT_SECRET)
 
-    console.log(decryptedId)
+    console.log(req.body.spellid)
     const likeExist = await model.userlikes.findOne({
         where: {
             userid: decryptedId.userId,
