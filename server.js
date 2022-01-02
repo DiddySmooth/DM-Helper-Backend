@@ -22,8 +22,6 @@ app.listen(PORT, () => {
 })
 
 
-//, 'https://dmhammer.herokuapp.com'
-
 const userRouter = require('./routes/userRoutes')
 const genRouter = require('./routes/genRoutes')
 const magicItemsRouter = require('./routes/magicItemsRoutes')
